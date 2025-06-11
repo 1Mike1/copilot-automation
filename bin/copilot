@@ -1,0 +1,68 @@
+#!/usr/bin/env python3
+# This script is used to automate the process of opening a chat in the sidebar of VS Code.
+
+import os
+import time
+import subprocess
+import pyperclip
+
+def check_dependencies():
+    """Check if required dependencies are installed."""
+    if subprocess.call(["which", "xdotool"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL) != 0:
+        print("Error: 'xdotool' is not installed. Please install it and try again.")
+        exit(1)
+
+def automate_vscode_chat():
+    merge_code_dir = "Merge_Code_Changes"
+
+    if not os.path.exists(merge_code_dir) or not os.listdir(merge_code_dir):
+        print("No files found in the target directory.")
+        return
+
+    try:
+        subprocess.run(["xdotool", "search", "--onlyvisible", "--class", "code", "windowactivate"], check=True)
+        time.sleep(2)
+
+        subprocess.run(["xdotool", "key", "ctrl+shift+p"], check=True)
+        time.sleep(1)
+        subprocess.run(["xdotool", "type", "chat: Open Chat in Side Bar"], check=True)
+        time.sleep(1)
+        subprocess.run(["xdotool", "key", "Return"], check=True)
+        time.sleep(2)
+
+        subprocess.run(["xdotool", "type", "/clear"], check=True)
+        time.sleep(1)
+        subprocess.run(["xdotool", "key", "Return"], check=True)
+        time.sleep(2)
+
+        subprocess.run(["xdotool", "key", "ctrl+slash"], check=True)
+        time.sleep(2)
+        subprocess.run(["xdotool", "type", "Folder"], check=True)
+        time.sleep(1)
+        subprocess.run(["xdotool", "key", "Return"], check=True)
+        time.sleep(0.5)
+        subprocess.run(["xdotool", "key", "ctrl+slash"], check=True)
+        time.sleep(0.5)
+        subprocess.run(["xdotool", "type", merge_code_dir], check=True)
+        time.sleep(1)
+        subprocess.run(["xdotool", "key", "Return"], check=True)
+        time.sleep(1)
+
+        with open("prompt.txt", "r") as prompt_file:
+            prompt_content = prompt_file.read()
+            pyperclip.copy(prompt_content)
+
+        subprocess.run(["xdotool", "key", "ctrl+v"], check=True)
+        time.sleep(1)
+        subprocess.run(["xdotool", "key", "Return"], check=True)
+
+    except subprocess.CalledProcessError as e:
+        print(f"Error during subprocess execution: {e}")
+    except FileNotFoundError:
+        print("Error: 'prompt.txt' file not found.")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+
+if __name__ == "__main__":
+    check_dependencies()
+    automate_vscode_chat()

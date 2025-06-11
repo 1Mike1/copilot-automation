@@ -1,0 +1,67 @@
+Task: Comprehensive Code Review, Refactoring, Testing, and Security Analysis
+1. Code Comparison: Old vs New
+    - Compare the old code with the updated version from the merge_request_* files.
+    - Highlight differences, including:
+    - Additions, removals, and modifications.
+    - Structural changes, logic updates, and function/method signature changes.
+    - Add inline comments explaining each change, focusing on improvements or regressions.
+
+2. Refactor Old Code
+    - Refactor the original code based on improvements observed in the new version:
+    - Enhance readability, maintainability, and modularity.
+    - Optimize performance (e.g., loops, memory usage, execution paths).
+    - Use modern language features where applicable.
+    - Ensure the refactored code is production-ready and optimized.
+
+3. Test Plan Generation
+    - Create a comprehensive test plan for all modified and newly introduced functionalities:
+    - Functional Tests: Input/output validation, boundary tests, error handling.
+    - Performance Tests: Stress tests, memory profiling, execution benchmarks.
+    - Edge Cases & Regression Tests: Cover unusual scenarios and prevent regressions.
+    - Security Tests: Unauthorized access, malformed input, session hijacking.
+    - Format the test plan as a CSV file with headers: TestCaseID, TestDescription, Input, ExpectedOutput, Type, Priority.
+    - Save the test plan locally without requiring user interaction.
+
+4. Merge File Inspection
+    - Inspect the merge_request_* files for new JS, CSS, or HTML files.
+    - If found:
+        -Optimize the code (e.g., minification, dead code removal, performance enhancements).
+        -Save optimized versions in the optimized folder.
+
+5. Copilot Change Review
+    - For each merge_request_* file:
+        -Compare it line-by-line with its old counterpart.
+        - Document specific changes introduced by Copilot:
+        - Original logic vs. new recommendation.
+        - Benefits of the change (e.g., readability, performance, bug fix).
+        - Add a comment block describing the intent or benefit of each change.
+
+6. Code Quality Rating
+    - Provide a code quality rating (1–10) for the merge file changes based on:
+    - Readability, maintainability, performance, consistency, scalability.
+    - Justify the rating with a brief explanation.
+
+7. Vulnerability Testing (Security Review)
+    - Perform static code analysis on merge_request_* files (excluding JS/HTML):
+    - Check for SQL injection, XSS, CSRF, insecure deserialization, deprecated functions, hardcoded credentials.
+    - Use tools like bandit for Python.
+    - Add security test cases to the test plan:
+    - Unauthorized access, malformed input, session hijacking, token leakage.
+    - Include a Security Checklist in the output report:
+    - Libraries checked for CVEs.
+    - Authentication and authorization flows verified.
+    - Sensitive data protection (encryption, masking).
+    - Input/output sanitization and validation.
+
+8. Result Summary
+    - Perform Vulnerability Test without user intervention.
+    - Make sure to generate a result.json under output/changes folder evert time with below details: 
+        - Number of lines modified after code review.
+        - Code quality rating.
+        - Number of test cases added.
+        - Details of vulnerabilities (if any) with severity levels.
+    
+
+9. Automation
+    - Ensure all tasks are automated without requiring manual intervention.
+    - Save all outputs (refactored code, test plan, optimized files, reports) locally. keep everthing under output/changes folder.

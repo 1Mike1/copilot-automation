@@ -1,0 +1,60 @@
+#!/bin/bash
+
+# Rename the file to better reflect its purpose
+mv /home/mithlesh.kumar2/Practice/Hackthon/code_reviewer/bin/tui_menu.sh /home/mithlesh.kumar2/Practice/Hackthon/code_reviewer/bin/commit_conquerors_menu.sh
+
+# TUI Menu for Commit Conquerors
+while true; do
+    clear
+    echo "" # Add an empty line to move the menu down
+    echo "" # Add another empty line to move the menu further down
+    echo -e "\e[1;36m       +---------------------------------------+\e[0m"
+    echo -e "\e[1;36m       |       Commit Conquerors TUI Menu      |\e[0m"
+    echo -e "\e[1;36m       +---------------------------------------+\e[0m"
+    echo -e "\e[1;36m       | 1. Fetch Merge Request Files          |\e[0m"
+    echo -e "\e[1;36m       | 2. Fetch Changes for a Merge Request  |\e[0m"
+    echo -e "\e[1;36m       | 3. Save Merge Request Changes Locally |\e[0m"
+    echo -e "\e[1;36m       | 4. Generate Copilot Suggestions       |\e[0m"
+    echo -e "\e[1;36m       | 5. Fetch Results                      |\e[0m"
+    echo -e "\e[1;36m       | 6. Exit                               |\e[0m"
+    echo -e "\e[1;36m       +---------------------------------------+\e[0m"
+    echo ""
+    read -p "Select an option: " choice
+
+    case $choice in
+        1)
+            echo -e "\e[1;36mFetching Merge Request Files...\e[0m"
+            curl -X GET "http://localhost:5005/merge-request/151/files"
+            ;;
+        2)
+            echo -e "\e[1;36mFetching Changes for a Merge Request...\e[0m"
+            curl -X GET "http://localhost:5005/merge-request/151/changes"
+            ;;
+        3)
+            echo -e "\e[1;36mSaving Merge Request Changes Locally...\e[0m"
+            #cd ..
+            curl -X POST http://localhost:5005/save_mr_changes -H "Content-Type: application/json" -d @output/changes/mr_151_changes.json
+            #cd bin
+            ;;
+            
+        4)
+            echo -e "\e[1;36mGenerating Copilot Suggestions...\e[0m"
+            curl -X POST http://localhost:5005/copilot_suggestion -H "Content-Type: application/json" -d '{"file_path": "output/changes/mr_151_changes.json"}'
+            ;;
+        5)
+            echo -e "\e[1;36mFetching Results...\e[0m"
+            curl -X GET "http://localhost:5005/read-results"
+            ;;
+        6)
+            echo -e "\e[1;36mExiting...\e[0m"
+            break
+            ;;
+        *)
+            echo -e "\e[1;36mInvalid option. Please try again.\e[0m"
+            ;;
+    esac
+
+    echo -e "Press any key to continue..."
+    read -n 1
+
+done
